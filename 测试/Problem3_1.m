@@ -1,0 +1,83 @@
+clc,clear
+format compact
+format short
+%本文件用于提取2023年6月24日-6月30日的可售品种信息和损耗率的相关信息
+%时间t范围:1089-1095
+%index:用于记录售出商品的编号
+%itemnum:售出的商品数量
+%SICostTable:itemnum*8的矩阵,用于记录7日单品的成本,第一列记录商品编号
+%SIPriceTable:itemnum*8的矩阵,用与记录7日单品的收入,第一列记录商品编号
+%SISalesTable:itemnum*8的矩阵,用于记录7日单品的销售量,第一列记录商品编号
+%p4SingleCost:251*7的矩阵,最后一周所有单品的批发价格
+%p4SingleSales:251*7的矩阵,最后一周所有单品的销售量
+%p4SinglePrice:251*7的矩阵,最后一周所有单品的售价
+[numData1,textData1,rawData1] = xlsread('a1.xlsx');
+SIC=textData1;
+temp=zeros(251,1);      %如果商品有售出就置为1
+index=[];
+N=55629;                %附件3中从55629条数据开始
+[numData2,textData2,rawData2] = xlsread('c3.xlsx');
+cSIC=textData2;
+SIcost=readmatrix('c4.xlsx');
+cdate = importdata('c1.txt');
+Lcdate=length(cdate);
+baseDate = datetime('2020-06-30', 'Format', 'yyyy-MM-dd');
+date= zeros(Lcdate,1);
+for i = 1:Lcdate
+    currentDate=datetime(cdate{i}, 'Format', 'yyyy-MM-dd');
+    cSdate(i)=days(currentDate-baseDate);
+end
+p4SingleCost=zeros(251,7);
+for i=N:length(cSIC)
+    temp1=find(ismember(SIC,cSIC(i)));
+    index=[index;temp1];
+    temp(temp1)=1;
+    p4SingleCost(temp1,cSdate(i)-1088)=SIcost(i);
+end
+index=unique(sort(index));
+itemnum=length(index);
+SICostTable=zeros(itemnum,8);
+SICostTable(:,1)=index;
+SIPriceTable=zeros(itemnum,8);
+SIPriceTable(:,1)=index;
+CostTable=readmatrix('CostTable.xlsx');
+SingleSales=readmatrix('SingleSales0.xlsx');
+p4SingleSales=SingleSales(:,[1089:1095]);
+writematrix(p4SingleSales,'p4SingleSales.xlsx');
+M=875002;               %附件2中从875002条数据开始
+[numData3,textData3,rawData3] = xlsread('a3.xlsx');
+a2SIC=textData3;
+SISales=readmatrix('a4.xlsx');
+Sdate=readmatrix('Sdate.xlsx');
+change=importdata('change.txt');
+search='销售';
+p4SinglePrice=zeros(251,7);
+SIprice=readmatrix('a6.xlsx');
+for i=M:length(a2SIC)
+    if strcmp(change(i),search)
+        temp1=find(ismember(SIC,a2SIC(i)));
+        p4SinglePrice(temp1,Sdate(i)-1088)=SIprice(i);
+    end
+end
+writematrix(p4SinglePrice,'p4SinglePrice.xlsx');
+writematrix(p4SingleCost,'p4SingleCost.xlsx');
+SISalesTable=zeros(itemnum,8);
+SISalesTable(:,1)=index;
+for i=1:itemnum
+    for j=2:8
+        temp1=SISalesTable(i,1);
+        SISalesTable(i,j)=p4SingleSales(temp1,j-1);
+        SICostTable(i,j)=p4SingleSales(temp1,j-1)*p4SingleCost(temp1,j-1);
+        SIPriceTable(i,j)=p4SingleSales(temp1,j-1)*p4SinglePrice(temp1,j-1);
+    end
+end
+writematrix(SISalesTable,'SISalesTable.xlsx');
+writematrix(SICostTable,'SICostTable.xlsx');
+writematrix(SIPriceTable,'SIPriceTable.xlsx');
+
+
+
+
+
+
+

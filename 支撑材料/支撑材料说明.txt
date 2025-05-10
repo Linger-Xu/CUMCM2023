@@ -1,0 +1,19 @@
+请顺次执行1-1,1-2,1-3,1-4,1-5,2-1,2-2,2-3,2-4,2-5,2-6,3-1,3-2,3-3
+需要用到的前置文件包括:
+附件1-4,“a1.xlsx(附件1的A列)”, “a2.xlsx(附件1的C列)”, “a3.xlsx(附件2的C列)”, 
+“a4.xlsx(附件2的D列)”, “a5.txt(附件2的A列)”, “a6.xlsx(附件2的E列)”, 
+“c1.xlsx(附件3的A列)”, “c3.xlsx(附件3的B列)”, “c4.xlsx(附件3的C列)”, 
+“d1.xlsx(附件4的A列)”, “d2.xlsx(附件4的C列)”, “change.txt(附件2的F列)”, 
+“discount.txt(附件2的G列)”, “SingleName.txt(附件1的B列)”
+
+除此之外,还包含生成的所有图片
+
+全部代码执行完毕后:文件夹中会多出下列文件:
+“TypeSales0.xlsx”, “TypeSales.xlsx”, “SingleSales0.xlsx”, “SingleSales.xlsx”
+“Sdate.xlsx”, “corrType.xlsx”, “SingleCoref.xlsx”, “weak.xlsx”, “middle.xlsx”, “strong.xlsx”, “itemlossrate.xlsx”,”CostTable.xlsx”,”TypeCostTable0.xlsx”, 
+“TypePriceTable0.xlsx”, “TypeCostTable.xlsx”, “TypePriceTable.xlsx”,
+“TypeCPCTable.xlsx”, “TypeCPCTable2.xlsx”, “beta.xlsx”, “bbeta.xlsx”, “Pre.xlsx”
+“xx.xlsx”, “yy,xlsx”, “p4SingleSales.xlsx”, “p4SinglePrice.xlsx”,
+“p4SingleCost.xlsx”, “SISalesTable.xlsx”, “SICostTable.xlsx”, “SIPriceTable.xlsx”
+“SISalesTable33.xlsx”, “ppt.xlsx”, “xxx.xlsx”, “yyy.xlsx”, “Name.txt”
+
